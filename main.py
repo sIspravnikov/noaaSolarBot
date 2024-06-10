@@ -52,6 +52,7 @@ async def main():
    scheduler.start()
 
    # update files on startup
+   print("Initialisation of data catalog")
    await getFiles()
    print("Initialisation completed")
 
