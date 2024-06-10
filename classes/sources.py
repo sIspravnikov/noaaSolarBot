@@ -28,13 +28,13 @@ class Sources:
             'command': '/suvi_094',
             'extension': 'png', 
             'url': 'https://services.swpc.noaa.gov/images/animations/suvi/primary/094/',
-            'description': 'Солнце в ультрафиолетовом диапазоне, 9.4 нм'
+            'description': 'Солнце в ультрафиолетовом диапазоне 9.4 нм'
             },
         'suvi_131': {
             'command': '/suvi_131',
             'extension': 'png', 
             'url': 'https://services.swpc.noaa.gov/images/animations/suvi/primary/131/',
-            'description': 'Солнце в ультрафиолетовом диапазоне, 13.1 нм'
+            'description': 'Солнце в ультрафиолетовом диапазоне 13.1 нм'
             },
         'suvi_171': {
             'command': '/suvi_171',
