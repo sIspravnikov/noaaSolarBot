@@ -5,6 +5,7 @@ from aiogram.types import Message, ReplyKeyboardRemove
 from classes.render import Render
 from aiogram.types import FSInputFile
 from classes.sources import Sources
+from classes.messages import Messages
 
 router = Router()
 animationType = os.path.basename(__file__).split('.')[0]
@@ -34,5 +35,5 @@ async def sdo_hmii(message: Message):
         )
     else:
         await message.reply(
-            text="Что-то пошло не так, обратитесь снова через пару минут"
+            text=Messages.error
         )
