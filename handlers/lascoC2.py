@@ -12,9 +12,9 @@ source = 'https://services.swpc.noaa.gov/images/animations/lasco-c2/'
 framesExtension = 'jpg'
 
 paths = {
-    'frames': f"{animationType}frames",
-    'gif': f"{animationType}gif",
-    'video': f"{animationType}mp4"
+    'frames': f"{os.path.join(os.getcwd(),'data',animationType, 'frames')}",
+    'gif': f"{os.path.join(os.getcwd(),'data',animationType, 'gif')}",
+    'video': f"{os.path.join(os.getcwd(),'data',animationType, 'mp4')}"
 }
 
 outputgif = f"{os.path.join(paths['gif'], animationType)}.gif"
@@ -30,10 +30,6 @@ async def cmd_lascoC2(message: Message):
             text="Запрос обрабатывается",
             reply_markup=ReplyKeyboardRemove()
         )
-
-        noaa = NOAA(source, framesExtension, paths)
-        noaa.getFiles()
-
         render = Render(paths)
         render.gif(outputgif)
         render.mp4(outputvideo, fps)

@@ -12,9 +12,9 @@ source = 'https://services.swpc.noaa.gov/images/animations/lasco-c3/'
 framesExtension = 'jpg'
 
 paths = {
-    'frames': f"{animationType}frames",
-    'gif': f"{animationType}gif",
-    'video': f"{animationType}mp4"
+    'frames': f"{os.path.join(os.getcwd(),'data',animationType, 'frames')}",
+    'gif': f"{os.path.join(os.getcwd(),'data',animationType, 'gif')}",
+    'video': f"{os.path.join(os.getcwd(),'data',animationType, 'mp4')}"
 }
 
 outputgif = f"{os.path.join(paths['gif'], animationType)}.gif"
@@ -24,18 +24,13 @@ outputvideo = f"{os.path.join(paths['video'], animationType)}.mp4"
 fps=15
 
 @router.message(Command(commands=[f"{animationType}"]))
-async def cmd_lascoC3(message: Message):
+async def cmd_lascoC2(message: Message):
     if (message.from_user.id == 217513939):
         await message.answer(
             text="Запрос обрабатывается",
             reply_markup=ReplyKeyboardRemove()
         )
-
-        noaa = NOAA(source, framesExtension, paths)
-        noaa.getFiles()
-
         render = Render(paths)
-        render.gif(outputgif)
         render.mp4(outputvideo, fps)
 
         await message.answer_video(

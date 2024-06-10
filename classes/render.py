@@ -1,5 +1,6 @@
 import os
 import imageio
+from tqdm import tqdm
 from natsort import natsorted
 import moviepy.video.io.ImageSequenceClip
 
@@ -12,8 +13,7 @@ class Render:
 
     def gif(self, outputgif: str) -> None:
         with imageio.get_writer(outputgif, mode='I') as writer:
-            for filename in natsorted(os.listdir(self.paths['frames'])):
-                print(f"adding frame: {filename}")
+            for filename in tqdm(natsorted(os.listdir(self.paths['frames'])), desc = "Building gif"):
                 image = imageio.imread(f"{self.paths['frames']}/{filename}")
                 writer.append_data(image)
 

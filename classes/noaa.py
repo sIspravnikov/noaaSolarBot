@@ -1,42 +1,61 @@
 import os
+import aiohttp
+import aiofiles
+import asyncio
+from tqdm import tqdm
 import shutil
 import requests
 from bs4 import BeautifulSoup
 
 class NOAA:
 
-    def __init__(self, url: str, extension: str, paths: dict) -> None:
+    def __init__(self, source: str, url: str, extension: str, paths: dict) -> None:
         self.url = url
         self.extension = extension
         self.paths = {}
         for key,value in paths.items():
-            self.paths[key] = (os.path.join(os.getcwd(), value))
+            self.paths[key] = (os.path.join(os.getcwd(), 'data', source, value))
         self._prepareFS()
 
     def _prepareFS(self) -> None:
         for path in self.paths.values():
-            if os.path.exists(path):
-                shutil.rmtree(path)
             if not os.path.exists(path):
-                os.mkdir(path)
+                os.makedirs(path, exist_ok=True)
 
-    def _downloadImage(self, source_url, path) -> None:
-        try:
-            response = requests.get(source_url, stream=True)
-            response.raise_for_status()
-        except Exception as exception:
-            print(f"{exception}")
-        else:
-            with open(path, 'wb') as f:
-                for chunk in response:
-                    f.write(chunk)
+    # синхронный метод, лочит бота, не используем
+    def _links2Files(self, links: list) -> None:
+        for url in tqdm(links, desc="downloading images"):
+            try:
+                response = requests.get(url, stream=True)
+                response.raise_for_status()
+            except Exception as exception:
+                print(f"{exception}")
+            else:
+                with open(f"{self.paths['frames']}/{url.split('/')[-1]}", 'wb') as f:
+                    for chunk in response:
+                        f.write(chunk)
+    # асинхронный метод
+    async def _fetch(self, url, session):
+        async with session.get(url) as response:
+            if response.status == 200:
+                if not os.path.exists(f"{self.paths['frames']}/{url.split('/')[-1]}"):
+                    file = await aiofiles.open(f"{self.paths['frames']}/{url.split('/')[-1]}", mode='wb')
+                    try: 
+                        await file.write(await response.read())
+                        await file.close()
+                        return await response.read()
+                    except Exception as exception:
+                        print(exception)
+    # асинхронный метод
+    async def _fetch_pages_parallel(self, urls: list):
+        async with aiohttp.ClientSession() as session:
+            results = []
+            for url in urls:
+                results.append(self._fetch(url, session))
+            await asyncio.gather(*results)
 
-    def _links2Files(self, links: list):
-        for counter, url in enumerate(links):
-            print(counter, url)
-            self._downloadImage(url, f"{self.paths['frames']}/{counter}.{self.extension}")
 
-    def getFiles(self) -> None:
+    async def getFiles(self) -> None:
         try:
             response = requests.get(self.url)
             response.raise_for_status()
@@ -46,5 +65,4 @@ class NOAA:
             if response.ok:
                 soup = BeautifulSoup(response.text, 'html.parser')
                 urls = [self.url + node.get('href') for node in soup.find_all('a') if node.get('href').endswith(self.extension)]
-                self._links2Files(urls)
-    
+                await self._fetch_pages_parallel(urls)
