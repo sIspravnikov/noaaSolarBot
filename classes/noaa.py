@@ -21,23 +21,24 @@ class NOAA:
             if not os.path.exists(path):
                 os.makedirs(path, exist_ok=True)
 
-    # синхронный метод, лочит бота, не используем
-    def _links2Files(self, links: list) -> None:
-        for url in tqdm(links, desc="downloading images"):
-            try:
-                response = requests.get(url, stream=True)
-                response.raise_for_status()
-            except Exception as exception:
-                print(f"{exception}")
-            else:
-                with open(f"{self.paths['frames']}/{url.split('/')[-1]}", 'wb') as f:
-                    for chunk in response:
-                        f.write(chunk)
+    # синхронный метод, лочит бота на время исполнения, не используем
+    # def _links2Files(self, links: list) -> None:
+    #     for url in tqdm(links, desc="downloading images"):
+    #         try:
+    #             response = requests.get(url, stream=True)
+    #             response.raise_for_status()
+    #         except Exception as exception:
+    #             print(f"{exception}")
+    #         else:
+    #             with open(f"{self.paths['frames']}/{url.split('/')[-1]}", 'wb') as f:
+    #                 for chunk in response:
+    #                     f.write(chunk)
     # асинхронный метод
     async def _fetch(self, url, session):
-        async with session.get(url) as response:
-            if response.status == 200:
-                if not os.path.exists(f"{self.paths['frames']}/{url.split('/')[-1]}"):
+        if not os.path.exists(f"{self.paths['frames']}/{url.split('/')[-1]}"):
+            async with session.get(url) as response:
+                if response.status == 200:
+                    print(f"new file {self.paths['frames']}/{url.split('/')[-1]}")
                     file = await aiofiles.open(f"{self.paths['frames']}/{url.split('/')[-1]}", mode='wb')
                     try: 
                         await file.write(await response.read())
@@ -49,7 +50,7 @@ class NOAA:
     async def _fetch_pages_parallel(self, urls: list):
         async with aiohttp.ClientSession() as session:
             results = []
-            for url in urls:
+            for url in tqdm(urls, desc = f"updating {self.url.split('/')[-2]} files"):
                 results.append(self._fetch(url, session))
             await asyncio.gather(*results)
 
