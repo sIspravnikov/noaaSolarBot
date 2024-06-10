@@ -1,17 +1,8 @@
+from classes.sources import Sources
+import os
+
 def main():
-    sources = {
-      'lascoC2': {
-         'extension': 'jpg', 
-         'url': 'https://services.swpc.noaa.gov/images/animations/lasco-c2/',
-      },
-      'lascoC3': {
-         'extension': 'jpg', 
-         'url': 'https://services.swpc.noaa.gov/images/animations/lasco-c3/',
-      }
-    }
-    
-    for key,value in sources.items():
-        print(key, value['extension'])
+    print(os.path.basename(__file__).split('.')[0])
 
 if __name__ == '__main__':
    main()

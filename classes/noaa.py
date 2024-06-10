@@ -3,7 +3,6 @@ import aiohttp
 import aiofiles
 import asyncio
 from tqdm import tqdm
-import shutil
 import requests
 from bs4 import BeautifulSoup
 

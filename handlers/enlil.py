@@ -2,13 +2,12 @@ import os
 from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardRemove
-from classes.noaa import NOAA
 from classes.render import Render
 from aiogram.types import FSInputFile
 
 router = Router()
-animationType = "lascoC3"
-source = 'https://services.swpc.noaa.gov/images/animations/lasco-c3/'
+animationType = os.path.basename(__file__).split('.')[0]
+source = f'https://services.swpc.noaa.gov/images/animations/{animationType}/'
 framesExtension = 'jpg'
 
 paths = {
@@ -24,21 +23,19 @@ outputvideo = f"{os.path.join(paths['video'], animationType)}.mp4"
 fps=15
 
 @router.message(Command(commands=[f"{animationType}"]))
-async def cmd_lascoC2(message: Message):
-    if (message.from_user.id == 217513939):
-        await message.answer(
-            text="Запрос обрабатывается",
-            reply_markup=ReplyKeyboardRemove()
-        )
-        render = Render(paths)
-        render.mp4(outputvideo, fps)
-
+async def cmd_lasco_c2(message: Message):
+    await message.answer(
+        text="Запрос обрабатывается",
+        reply_markup=ReplyKeyboardRemove()
+    )
+    render = Render(paths)
+    status = render.mp4(outputvideo, fps)
+    if status:
         await message.answer_video(
             video = FSInputFile(outputvideo),
             reply_markup=ReplyKeyboardRemove()
         )
     else:
         await message.answer(
-            text=f"Бот пока кривоват и отвечает только одному кожаному ублюдку - хозяину",
-            reply_markup=ReplyKeyboardRemove()
+            text="Что-то пошло не так, обратитесь снова через пару минут"
         )

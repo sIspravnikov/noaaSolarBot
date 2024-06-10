@@ -1,8 +1,5 @@
 # workdirs
-*gif*/
-*frames*/
-*mp4*/
-
+data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
