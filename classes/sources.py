@@ -16,7 +16,7 @@ class Sources:
             'command': '/enlil',
             'extension': 'jpg', 
             'url': 'https://services.swpc.noaa.gov/images/animations/enlil/',
-            'description': 'Леденец'
+            'description': 'Предсказательная модель солнечного ветра'
             },
         'sdo_hmii': {
             'command': '/sdo_hmii',
