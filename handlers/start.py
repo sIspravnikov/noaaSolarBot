@@ -3,8 +3,7 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
 from classes.sources import Sources
-from aiogram.enums import ParseMode
-from aiogram.utils.formatting import as_list, as_marked_section
+from aiogram.utils.formatting import as_list
 
 router = Router()
 newline = "\n"
