@@ -46,4 +46,4 @@ async def cmd_lascoC3(message: Message):
         await message.answer(
             text=f"Бот пока кривоват и отвечает только одному кожаному ублюдку - хозяину",
             reply_markup=ReplyKeyboardRemove()
-        )  
+        )
