@@ -25,21 +25,25 @@ fps=15
 
 @router.message(Command(commands=[f"{animationType}"]))
 async def cmd_lascoC2(message: Message):
-    await message.answer(
-        text="Запрос обрабатывается",
-        reply_markup=ReplyKeyboardRemove()
-    )
+    if (message.from_user.id == 217513939):
+        await message.answer(
+            text="Запрос обрабатывается",
+            reply_markup=ReplyKeyboardRemove()
+        )
 
-    noaa = NOAA(source, framesExtension, paths)
-    noaa.getFiles()
+        noaa = NOAA(source, framesExtension, paths)
+        noaa.getFiles()
 
-    render = Render(paths)
-    render.gif(outputgif)
-    render.mp4(outputvideo, fps)
+        render = Render(paths)
+        render.gif(outputgif)
+        render.mp4(outputvideo, fps)
 
-    lascoC2video = FSInputFile(outputvideo)
-
-    await message.answer_video(
-        video = lascoC2video,
-        reply_markup=ReplyKeyboardRemove()
-    )
+        await message.answer_video(
+            video = FSInputFile(outputvideo),
+            reply_markup=ReplyKeyboardRemove()
+        )
+    else:
+        await message.answer(
+            text=f"Бот пока кривоват и отвечает только одному кожаному ублюдку - хозяину",
+            reply_markup=ReplyKeyboardRemove()
+        )  
