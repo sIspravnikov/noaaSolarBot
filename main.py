@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from config_reader import config
-from handlers import start, lasco_c3, lasco_c2, enlil, sdo_hmii
+from handlers import start, lasco_c3, lasco_c2, enlil, sdo_hmii, suvi_094, suvi_131, suvi_171, suvi_195, suvi_284, suvi_304
 from handlers.menu import set_menu
 from classes.noaa import NOAA
 from classes.sources import Sources
@@ -39,11 +39,21 @@ async def main():
    dispatcher.include_router(lasco_c3.router)
    dispatcher.include_router(enlil.router)
    dispatcher.include_router(sdo_hmii.router)
+   dispatcher.include_router(suvi_094.router)
+   dispatcher.include_router(suvi_131.router)
+   dispatcher.include_router(suvi_171.router)
+   dispatcher.include_router(suvi_195.router)
+   dispatcher.include_router(suvi_284.router)
+   dispatcher.include_router(suvi_304.router)
 
    scheduler = AsyncIOScheduler()
    scheduler.add_job(getFiles, 'interval', seconds=600)
    # scheduler.add_job(cleanFiles, 'interval', seconds = 700)
    scheduler.start()
+
+   # update files on startup
+   await getFiles()
+   print("Initialisation completed")
 
    await dispatcher.start_polling(bot)
 
