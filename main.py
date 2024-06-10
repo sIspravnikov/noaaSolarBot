@@ -6,7 +6,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 
 from config_reader import config
 from handlers import start, lasco_c3, lasco_c2, enlil, sdo_hmii, suvi_094, suvi_131, suvi_171, suvi_195, suvi_284, suvi_304
-from handlers.menu import set_menu
+from menu.menu import set_menu
 from classes.noaa import NOAA
 from classes.sources import Sources
 
