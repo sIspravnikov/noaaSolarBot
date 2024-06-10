@@ -2,20 +2,20 @@
 from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
-from config_reader import config
 from classes.sources import Sources
+from aiogram.enums import ParseMode
+from aiogram.utils.formatting import as_list, as_marked_section
 
 router = Router()
 newline = "\n"
 
-startMessage = f"""
+startMessage = as_list(f"""
 Текущие возможности:
-- LASCO CORONAGRAPH
-{newline.join(f"/{source}" for source in Sources.sources)}
-"""
+{newline.join(f"/{source} {params['description']}" for source, params in Sources.sources.items())}
+""")
 
 @router.message(Command("start"))
 async def start_cmd(message: Message):
     await message.answer(
-        startMessage
+        **startMessage.as_kwargs()
     )

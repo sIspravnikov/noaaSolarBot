@@ -24,7 +24,7 @@ outputvideo = f"{os.path.join(paths['video'], animationType)}.mp4"
 fps=15
 
 @router.message(Command(commands=[f"{animationType}"]))
-async def cmd_lasco_c3(message: Message):
+async def sdo_hmii(message: Message):
     render = Render(paths)
     status = render.mp4(outputvideo, fps)
     if status:
