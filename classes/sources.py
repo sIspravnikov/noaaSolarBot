@@ -18,4 +18,10 @@ class Sources:
             'url': 'https://services.swpc.noaa.gov/images/animations/enlil/',
             'description': 'Леденец'
             },
+        'sdo_hmii': {
+            'command': '/sdo_hmii',
+            'extension': 'jpg', 
+            'url': 'https://services.swpc.noaa.gov/images/animations/sdo-hmii/',
+            'description': 'Солнце в видимом диапазоне'
+            },
     }
