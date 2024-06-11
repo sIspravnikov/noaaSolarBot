@@ -2,7 +2,7 @@ import os
 # import imageio
 # from tqdm import tqdm
 from natsort import natsorted
-import moviepy.video.io.ImageSequenceClip
+from moviepy.video.io.ImageSequenceClip import ImageSequenceClip
 
 class Render:
 
@@ -22,7 +22,7 @@ class Render:
         try:
             for filename in natsorted(os.listdir(self.paths['frames'])):
                 image_files.append(os.path.join(self.paths['frames'], filename))
-            clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
+            clip = ImageSequenceClip(image_files, fps=fps)
             clip.write_videofile(outputvideo)
         except Exception:
             return None
