@@ -35,11 +35,11 @@ class NOAA:
     #                     f.write(chunk)
     # асинхронный метод
     async def _fetch(self, url, session):
-        if not os.path.exists(f"{self.paths['frames']}/{url.split('/')[-1]}"):
+        if not os.path.exists(f"{os.path.join(self.paths['frames'], url.split('/')[-1])}"):
             async with session.get(url) as response:
                 if response.status == 200:
-                    print(f"new file {self.paths['frames']}/{url.split('/')[-1]}")
-                    file = await aiofiles.open(f"{self.paths['frames']}/{url.split('/')[-1]}", mode='wb')
+                    print(f"new file {os.path.join(self.paths['frames'], url.split('/')[-1])}")
+                    file = await aiofiles.open(f"{os.path.join(self.paths['frames'], url.split('/')[-1])}", mode='wb')
                     try: 
                         await file.write(await response.read())
                         await file.close()
@@ -48,9 +48,10 @@ class NOAA:
                         print(exception)
     # асинхронный метод
     async def _fetch_pages_parallel(self, urls: list):
+        slash = '\\'
         async with aiohttp.ClientSession() as session:
             results = []
-            for url in tqdm(urls, desc = f"updating {self.url.split('/')[-2]} files"):
+            for url in tqdm(urls, desc = f"updating {self.paths['frames'].split(slash)[-2]} files"):
                 results.append(self._fetch(url, session))
             await asyncio.gather(*results)
 
