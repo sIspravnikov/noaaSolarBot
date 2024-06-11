@@ -29,6 +29,6 @@ class Render:
         else:
             return True
         
-    def remove(self, outputvideo: str) -> None:
+    async def remove(self, outputvideo: str) -> None:
         if os.path.exists(outputvideo):
             os.remove(outputvideo)
