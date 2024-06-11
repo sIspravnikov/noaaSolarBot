@@ -53,9 +53,9 @@ async def main():
    scheduler.start()
 
    # update files on startup
-   print("Initialisation of data catalog")
+   print("Initialization of data catalog")
    await getFiles()
-   print("Initialisation completed")
+   print("Initialization completed")
 
    await dispatcher.start_polling(bot)
 
