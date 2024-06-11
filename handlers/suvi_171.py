@@ -36,3 +36,4 @@ async def cmd_suvi_171(message: Message):
         await message.reply(
             text=Messages.error
         )
+    render.remove(outputvideo)

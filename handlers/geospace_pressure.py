@@ -37,3 +37,4 @@ async def cmd_geospace_ovation(message: Message):
         await message.reply(
             text=Messages.error
         )
+    render.remove(outputvideo)

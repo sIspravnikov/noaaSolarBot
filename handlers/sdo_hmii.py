@@ -37,3 +37,4 @@ async def sdo_hmii(message: Message):
         await message.reply(
             text=Messages.error
         )
+    render.remove(outputvideo)

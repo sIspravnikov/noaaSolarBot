@@ -37,3 +37,4 @@ async def cmd_lasco_c2(message: Message):
         await message.reply(
             text=Messages.error
         )
+    render.remove(outputvideo)
