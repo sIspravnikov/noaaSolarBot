@@ -1,5 +1,11 @@
 class Sources:
     sources = {
+        'ovation': {
+            'command': '/ovation',
+            'extension': 'jpg', 
+            'url': 'https://services.swpc.noaa.gov/images/animations/ovation/north/',
+            'description': 'Модель овала северного сияния'
+            },
         'lasco_c2': {
             'command': '/lasco_c2',
             'extension': 'jpg', 
@@ -16,7 +22,7 @@ class Sources:
             'command': '/enlil',
             'extension': 'jpg', 
             'url': 'https://services.swpc.noaa.gov/images/animations/enlil/',
-            'description': 'Предсказательная модель солнечного ветра'
+            'description': 'Модель солнечного ветра и корональных выбросов WSA-Enlil'
             },
         'sdo_hmii': {
             'command': '/sdo_hmii',
@@ -59,5 +65,11 @@ class Sources:
             'extension': 'png', 
             'url': 'https://services.swpc.noaa.gov/images/animations/suvi/primary/304/',
             'description': 'Солнце в ультрафиолетовом диапазоне 30.4 нм'
+            },
+        'geospace_pressure': {
+            'command': '/geospace_pressure',
+            'extension': 'png', 
+            'url': 'https://services.swpc.noaa.gov/images/animations/geospace/pressure/',
+            'description': 'Модель давления плазмы'
             },
     }
