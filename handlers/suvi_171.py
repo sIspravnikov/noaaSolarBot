@@ -33,6 +33,7 @@ async def cmd_suvi_171(message: Message):
             video = FSInputFile(outputvideo),
             reply_markup=ReplyKeyboardRemove()
         )
+    else:
         await message.reply(
             text=Messages.error
         )
