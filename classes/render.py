@@ -27,6 +27,7 @@ class Render:
         except Exception:
             return None
         else:
+            clip.close()
             return True
         
     async def remove(self, outputvideo: str) -> None:
