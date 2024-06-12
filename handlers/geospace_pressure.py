@@ -27,7 +27,7 @@ fps=15
 @router.message(Command(commands=[f"{animationType}"]))
 async def cmd_geospace_ovation(message: Message):
     render = Render(paths)
-    status = render.mp4(outputvideo, fps)
+    status = await render.mp4(outputvideo, fps)
     if status:
         await message.reply_video(
             video = FSInputFile(outputvideo),

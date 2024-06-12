@@ -17,7 +17,7 @@ class Render:
     #             image = imageio.imread(f"{self.paths['frames']}/{filename}")
     #             writer.append_data(image)
 
-    def mp4(self, outputvideo: str, fps: int) -> str:
+    async def mp4(self, outputvideo: str, fps: int) -> str:
         image_files = []
         try:
             for filename in natsorted(os.listdir(self.paths['frames'])):
