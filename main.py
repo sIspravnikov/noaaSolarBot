@@ -5,13 +5,18 @@ from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from config_reader import config
-from handlers import start, lasco_c3, lasco_c2, enlil, sdo_hmii, suvi_094, suvi_131, suvi_171, suvi_195, suvi_284, suvi_304, ovation, geospace_pressure
+from handlers import start, lasco_c3, lasco_c2, enlil, sdo_hmii, suvi_094, suvi_131, suvi_171, suvi_195, suvi_284, suvi_304, ovation, geospace_pressure, release_notes
 from menu.menu import set_menu
 from classes.noaa import NOAA
 from classes.sources import Sources
 
 async def cleanFiles():
    pass
+   # очистка данных, обдумать сроки хранения
+
+async def archiveFiles():
+   pass
+   # перенос в архив, обдумать сроки хранения
 
 async def getFiles():
    paths = {
@@ -46,6 +51,7 @@ async def main():
    dispatcher.include_router(suvi_304.router)
    dispatcher.include_router(ovation.router)
    dispatcher.include_router(geospace_pressure.router)
+   dispatcher.include_router(release_notes.router)
 
    scheduler = AsyncIOScheduler()
    scheduler.add_job(getFiles, 'interval', seconds=600)
