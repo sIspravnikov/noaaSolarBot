@@ -36,16 +36,17 @@ class NOAA:
     # асинхронный метод
     async def _fetch(self, url, session):
         if not os.path.exists(f"{os.path.join(self.paths['frames'], url.split('/')[-1])}"):
-            async with session.get(url) as response:
-                if response.status == 200:
-                    print(f"new file {os.path.join(self.paths['frames'], url.split('/')[-1])}")
-                    file = await aiofiles.open(f"{os.path.join(self.paths['frames'], url.split('/')[-1])}", mode='wb')
-                    try: 
-                        await file.write(await response.read())
-                        await file.close()
-                        return await response.read()
-                    except Exception as exception:
-                        print(exception)
+            if not "latest" in url.split('/')[-1]:
+                async with session.get(url) as response:
+                    if response.status == 200:
+                        print(f"new file {os.path.join(self.paths['frames'], url.split('/')[-1])}")
+                        file = await aiofiles.open(f"{os.path.join(self.paths['frames'], url.split('/')[-1])}", mode='wb')
+                        try: 
+                            await file.write(await response.read())
+                            await file.close()
+                            return await response.read()
+                        except Exception as exception:
+                            print(exception)
     # асинхронный метод
     async def _fetch_pages_parallel(self, urls: list):
         slash = '\\'
