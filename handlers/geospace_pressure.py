@@ -12,6 +12,8 @@ animationType = os.path.basename(__file__).split('.')[0]
 source = Sources.sources[animationType]['url']
 framesExtension = Sources.sources[animationType]['extension']
 
+default_frames = 241
+
 paths = {
     'frames': f"{os.path.join(os.getcwd(),'data',animationType, 'frames')}",
     'gif': f"{os.path.join(os.getcwd(),'data',animationType, 'gif')}",
@@ -26,7 +28,7 @@ fps=15
 
 @router.message(Command(commands=[f"{animationType}"]))
 async def cmd_geospace_ovation(message: Message):
-    render = Render(paths)
+    render = Render(paths, default_frames)
     status = await render.mp4(outputvideo, fps)
     if status:
         await message.reply_video(
