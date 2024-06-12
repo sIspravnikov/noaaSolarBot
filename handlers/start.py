@@ -11,6 +11,9 @@ newline = "\n"
 startMessage = as_list(f"""
 Текущие возможности:
 {newline.join(f"/{source} {params['description']}" for source, params in Sources.sources.items())}
+
+Пока что рендерится такое же количество кадров, как на сайте NOAA. 
+Архивные данные скачиваются в фоне и в будущем будет возможность получать и за период
 """)
 
 @router.message(Command("start"))
