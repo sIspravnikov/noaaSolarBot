@@ -26,8 +26,9 @@ async def getFiles():
    }
 
    for source, params in Sources.sources.items():
-      noaa = NOAA(source, params['url'], params['extension'], paths)
-      await noaa.getFiles()
+      if params['dataType'] != "txt":
+         noaa = NOAA(source, params['url'], params['dataType'], paths)
+         await noaa.getFiles()
 
 async def main():
    logging.basicConfig(
@@ -52,6 +53,7 @@ async def main():
    dispatcher.include_router(ovation.router)
    dispatcher.include_router(geospace_pressure.router)
    dispatcher.include_router(release_notes.router)
+   # dispatcher.include_router(discussion.router)
 
    scheduler = AsyncIOScheduler()
    scheduler.add_job(getFiles, 'interval', seconds=600)

@@ -8,9 +8,9 @@ from bs4 import BeautifulSoup
 
 class NOAA:
 
-    def __init__(self, source: str, url: str, extension: str, paths: dict) -> None:
+    def __init__(self, source: str, url: str, dataType: str, paths: dict) -> None:
         self.url = url
-        self.extension = extension
+        self.dataType = dataType
         self.paths = {}
         for key,value in paths.items():
             self.paths[key] = (os.path.join(os.getcwd(), 'data', source, value))
@@ -66,5 +66,5 @@ class NOAA:
         else:
             if response.ok:
                 soup = BeautifulSoup(response.text, 'html.parser')
-                urls = [self.url + node.get('href') for node in soup.find_all('a') if node.get('href').endswith(self.extension)]
+                urls = [self.url + node.get('href') for node in soup.find_all('a') if node.get('href').endswith(self.dataType)]
                 await self._fetch_pages_parallel(urls)

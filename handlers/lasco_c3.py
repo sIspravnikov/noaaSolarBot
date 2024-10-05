@@ -6,28 +6,31 @@ from classes.render import Render
 from aiogram.types import FSInputFile
 from classes.sources import Sources
 from classes.messages import Messages
+from classes.storage import Storage
+from classes.debug import Debug
 
 router = Router()
-animationType = os.path.basename(__file__).split('.')[0]
-source = Sources.sources[animationType]['url']
-framesExtension = Sources.sources[animationType]['extension']
+routerName = os.path.basename(__file__).split('.')[0]
+source = Sources.sources[routerName]['url']
+framesExtension = Sources.sources[routerName]['dataType']
 
 default_frames = 73
 
 paths = {
-    'frames': f"{os.path.join(os.getcwd(),'data',animationType, 'frames')}",
-    'gif': f"{os.path.join(os.getcwd(),'data',animationType, 'gif')}",
-    'video': f"{os.path.join(os.getcwd(),'data',animationType, 'mp4')}"
+    'frames': f"{os.path.join(Storage.basepath,routerName, 'frames')}",
+    'gif': f"{os.path.join(Storage.basepath,routerName, 'gif')}",
+    'video': f"{os.path.join(Storage.basepath,routerName, 'mp4')}"
 }
 
-outputgif = f"{os.path.join(paths['gif'], animationType)}.gif"
-outputvideo = f"{os.path.join(paths['video'], animationType)}.mp4"
+outputgif = f"{os.path.join(paths['gif'], routerName)}.gif"
+outputvideo = f"{os.path.join(paths['video'], routerName)}.mp4"
 
 # кадров в секунду для видео
 fps=15
 
-@router.message(Command(commands=[f"{animationType}"]))
+@router.message(Command(commands=[f"{routerName}"]))
 async def cmd_lasco_c3(message: Message):
+    Debug.print_user(message)
     render = Render(paths, default_frames)
     status = await render.mp4(outputvideo, fps)
     if status:

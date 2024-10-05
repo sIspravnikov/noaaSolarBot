@@ -4,6 +4,7 @@ from aiogram.filters import Command
 from aiogram.types import Message
 from classes.sources import Sources
 from aiogram.utils.formatting import as_list
+from classes.debug import Debug
 
 router = Router()
 newline = "\n"
@@ -18,6 +19,7 @@ startMessage = as_list(f"""
 
 @router.message(Command("start"))
 async def start_cmd(message: Message):
+    Debug.print_user(message)
     await message.answer(
         **startMessage.as_kwargs()
     )
